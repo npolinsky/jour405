@@ -33,7 +33,9 @@ umd_fees_pct <- umd_fees |> mutate(pct_change = (`Fall 2026`- `Fall 2021`)/`Fall
 
 Write a few sentences about what you found in those percentages. What's the story here? What questions do you have?
 
+The student counseling center is a new student-funded fee addition from Fall '21 to the present day, hence why the percentage is infinite. Student sustainability saw an increase of 150%, which was the second largest behind the student counseling, though this number isn't as crazy as it seems because it rose only $18 over 6 years.
 
+The shuttle bus increase caught my eye with an increase of 58.3% from Fall '21 to Fall '26. Specifically the recent increases are likely due to the new electric busses on campus. Because of how often the bus system is used, the main story I'd be looking at is whether students believe the bus system has improved in the recent years with these fee hikes. 
 
 
 When you are done, save your work, switch to GitHub Desktop, then add, commit and push your changes to GitHub and submit the URL of the notebook in ELMS.
