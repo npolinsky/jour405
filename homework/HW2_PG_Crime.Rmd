@@ -70,7 +70,9 @@ One of the crimes
 
 Write up a lede and nutgraf of a story focused on the crime data in Prince George's County. It could be from any of the dataframes you've created in this assignment. The lede should be a single sentence that summarizes the most important information in the data. The nutgraf should be a paragraph that provides more context and explains why the data is important.
 
-ANSWER HERE
+Tons of people drive a vehicle, but what many don't realize is that once they park it, it becomes a massive target for crime in Prince George's County.
+
+Outside of car accidents, the next two highest recorded incidents in PG County were stolen automobiles, and theft from automobiles. In 2024, nearly 400 cars were stolen per month on average, with October recording the highest single-month tally at 462. Theft from automobiles wasn't far behind, with nearly 392 being recorded during the same time period.
 
 ### Task 9: Save Your Work and Put it on GitHub
 
