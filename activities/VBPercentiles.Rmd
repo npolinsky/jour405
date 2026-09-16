@@ -39,6 +39,10 @@ team_aces |> mutate(percentile = ntile(total_aces, 100))
 
 Write a couple of sentences that puts Maryland into context with the other teams in the dataset. You can do some Internet research to help with this.
 
+Maryland is in the 95th percentile. That means that Maryland has more than or the same amount of aces as 95% of the teams in the nation. 17th in the nation is much harder to picture because you don't know how many there are, although there is like 343. When you say 95th percentile it's more impressive.
+
+This stat seems to not mean much. Purdue was in the 23rd percentile in service aces, and they finished 16-4 in the Big Ten compared to Maryland's 5-15 conference finish.
+
 
 
 When you are done, save your work, switch to GitHub Desktop, then add, commit and push your changes to GitHub and submit the URL of the notebook in ELMS.
