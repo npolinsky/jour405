@@ -76,8 +76,14 @@ Calculate the Interquartile Range of the 2020 violent crime rate using `summariz
 
 Do the results change your best story idea from the previous assignment? Why or why not?
 
+No, this only reinforces my story idea. Ocean City is 19 incidents per 1,000 over the IQR, and ranks in the 100th percentile of violent crime rate in Maryland. 
+
 Save this notebook, then commit it to your local repository. Push the changes to your GitHub repository and submit the URL for this file in ELMS.
 
 ```{r}
-md_cities_percentiles <- 
+md_cities_percentiles <- md_cities_rates |>  mutate(percentile=ntile(violent_rate_2020, 100))
+
+md_cities_rates |> summarize(IQR(violent_rate_2020))
+
 ```
+
