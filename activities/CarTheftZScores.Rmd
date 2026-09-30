@@ -292,5 +292,6 @@ cat(sprintf("pnorm() estimate - probability of a month this high or higher: %.4f
 actual_prob <- sum(car_thefts$total >= highest_month$total) / nrow(car_thefts)
 cat(sprintf("Actual data - proportion of months this high or higher: %.4f (%.2f%%)\n", actual_prob, actual_prob * 100))
 ```
+Nicholas Polinsky <------- I did this assignment! I should probably not leave my car running in the morning when I get older yet I probably still will. 
 
 The `pnorm()` estimate and the actual proportion won't match perfectly — `pnorm()` assumes a normal distribution, and real data is never perfectly normal. But they should be in the same ballpark, and the comparison helps us see how well the normal model fits.
