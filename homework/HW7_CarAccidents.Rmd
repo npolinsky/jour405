@@ -32,6 +32,7 @@ library(lubridate)  # For working with dates
 Load the accident data from our CSV file at https://raw.githubusercontent.com/dwillis/jour405/refs/heads/main/data/daily_accidents.csv into a dataframe called `accidents`:
 
 ```{r load-data}
+accidents <- read_csv("https://raw.githubusercontent.com/dwillis/jour405/refs/heads/main/data/daily_accidents.csv")
 
 ```
 
@@ -68,7 +69,13 @@ ggplot(accidents, aes(x = date, y = total)) +
 ### Task 2 (3 points)
 Looking at the time series visualization above, identify at least two noticeable patterns or anomalies. What questions would you want to investigate further based on this initial view of the data? How might these visual patterns translate into potential story angles?
 
-ANSWER HERE
+There was a sharp dip in accidents during the early months of 2020.
+
+Mid to late 2021 saw a spike in accidents, including the single highest reported accidents in a day value of 58, two days before Halloween.
+
+We know that COVID greatly decreased public travel in 2020, likely causing the lower accident numbers.
+
+Allowing ourselves to see the peaks and valleys of the data can help us spot certain points that are worth noting.
 
 The daily data is quite noisy, so let's also look at weekly patterns:
 
@@ -107,7 +114,9 @@ ggplot(accidents, aes(x = day_of_week, y = total)) +
 ### Task 3 (2 points)
 Based on the day-of-week analysis, which day(s) have the highest and lowest average accidents? Why might these patterns exist?
 
-ANSWER HERE
+Fridays have the highest average number of accidents, and Saturdays are right behind. Mondays, Tuesdays, and Wednesdays have about the lowest average number of accidents. My guess would be that drunk/buzzed driving may play a factor in these averages. People tend drink more on the weekends.
+
+People also may be more in a hurry to get home from work on a Friday then they are on a Monday.
 
 ## Calculating Z-Scores
 
@@ -119,10 +128,10 @@ Now, using the accidents dataframe, add three columns using `mutate()`: mean_acc
 # Calculate z-scores for total accidents
 accidents <- accidents |>
   mutate(
-    mean_accidents = REPLACE_ME,
-    sd_accidents = REPLACE_ME,
-    z_score = (REPLACE_ME - REPLACE_ME) / REPLACE_ME
-  )
+    mean_accidents = mean(total),
+    sd_accidents = sd(total),
+    z_score = (total - mean_accidents) / sd_accidents)
+
 
 # Display the data with z-scores
 accidents |>
@@ -156,7 +165,9 @@ unusual_days |>
 ### Task 5 (3 points)
 Choose one of the top 10 unusual days and research what might have happened on that date. Look for weather events, holidays, major incidents, or other factors that could explain the unusual number of accidents. Briefly describe your findings and how you would incorporate this context into a story.
 
-ANSWER HERE
+On November 16, 2018, a snowstorm rolled through Prince George's County, causing slick roads, and dangerous driving conditions. According to my research, PG County schools remained open that morning, putting more vehicles on the road that could cause accidents.
+
+This story could look in to whether schools remaining open caused any accidents that day, and whether it put kids, county staff, or parents in potential danger.
 
 Let's visualize these unusual days:
 
@@ -186,9 +197,9 @@ Let's calculate z-scores that account for day of week patterns based on the same
 accidents <- accidents |>
   group_by(day_of_week) |>
   mutate(
-    dow_mean = REPLACE_ME,
-    dow_sd = REPLACE_ME,
-    dow_z_score = (REPLACE_ME - REPLACE_ME) / REPLACE_ME
+    dow_mean = mean(total),
+    dow_sd = sd(total),
+    dow_z_score = (total - dow_mean) / dow_sd
   ) |>
   ungroup()
 
@@ -207,7 +218,7 @@ unusual_dow |>
 ### Task 7 (3 points)
 Compare the days that have extreme z-scores overall versus those with extreme day-of-week z-scores. How do these lists differ? What journalistic insights can you draw from comparing these two different approaches to measuring "unusual" days?
 
-ANSWER HERE
+When looking at the general z-scores, you are able to find raw data from the entire set of major outlier days. When you look at a day like a Monday, Tuesday, or Wednesday, days that typically had less incidents, you can use the day relative z-score to find certain values on those days that aren't consistent with what another M/T/W looked like.
 
 Let's see how many unusual days we have for each day of the week:
 
@@ -286,7 +297,12 @@ unusual_monthly |>
 ### Task 8 (2 points)
 Based on the monthly pattern analysis, which months have the highest and lowest average accidents? Develop a hypothesis about why these seasonal patterns exist.
 
-ANSWER HERE
+October and December have the highest numbers of average incidents. On the flip side, January and March have the least. In October to December, it starts to get darker much quicker than it did in the spring and summer months, making the drive home darker. There also tends to be some rain or even snow in these months, creating dangerous road conditions.
+
+The Spike in May before the summer months comes right around where school starts to, or gets closer to getting out for the summer. The weather makes more people want to go outside and go do something.
+
+For January, an even heavier period of snow could mean school cancellations and working from home, drastically decreasing the among of people on the road. 
+
 
 ## Identifying Extreme Outliers
 
@@ -311,9 +327,20 @@ if(nrow(extreme_outliers) > 0) {
 ### Task 9 (2 points)
 For the extreme outliers identified (z-scores beyond ±3), what do they have in common?
 
-ANSWER HERE
+Nearly all of the extreme highs come on Fridays or Saturdays. This could come from drowsy driving, drunk driving, and a general increase in travel volume all throughout the weekend.
+
+It is difficult to deduce anything from the extremely low outliers. 
 
 ## Your Best Story Pitch
 
 ### Task 10 (5 points)
 Based on all the analyses performed, craft your best story pitch, including a headline and lede. Be sure to include what kinds of sources/people you'd talk to for the story.
+
+Prince George's County Roads Face Massive Surges of Weekend Accidents
+
+While accident patterns tend to remain subdued during the week, Fridays and Saturdays have posted some of the most dangerous numbers over the last near decade. County data shows that some of the highest surges routinely fall over the weekend, driven by late-night travel, higher traffic volume, and impaired driving.
+
+- Restaurant/bar owner in Bowie, College Park
+- PG County Police
+- Local Paramedics
+- Residents who live near accident hotspots
