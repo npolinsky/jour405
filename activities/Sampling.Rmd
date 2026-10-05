@@ -65,7 +65,7 @@ population |>
 
 Compare the means and standard deviations. Are they similar? Go back and re-run the sampling and statistics calculations with a smaller sample size. How do the results change?
 
-The means and standard deviations are very close together. The difference in the mean is only .27 and the difference in the standard deviation is only about .05. Theyn are very similar and the sample represents the population. 
+The means and standard deviations are very close together. The difference in the mean is only .27 and the difference in the standard deviation is only about .05. They are very similar and the sample represents the population. 
 
 I did it a second time with a sample of 50. This time, the difference in age is about 2.03. The difference in standard deviation is about 1.52. This shows how smaller samples can be less representative of a full population.
 
