@@ -66,7 +66,7 @@ summary_stats
 
 **Answer this question:** The sample mean is lower than the baseline of 8.2 minutes. How much lower? Does that seem like a meaningful improvement to you, just based on the numbers? What would you want to know before deciding?
 
-The sample mean is .425 minutes (about 26 seconds) lower than the baseline of 8.2 minutes. Those seconds saved could make a difference in massive emergencies, but looking widely at response times to calls I feel as it isn't too meaningful of a change. 
+The sample mean is .425 minutes (about 26 seconds) lower than the baseline of 8.2 minutes. When I also consider that the sample standard deviation is only .28 compared to 1.5 previously, that means the data points are much tighter to the mean. Because of those numbers, I'd say this is a meaningful improvement.
 
 I'd want to know how the samples of calls were chosen, as well as the breakdown of which of these calls were high priority.
 
@@ -76,12 +76,12 @@ Now we formally test the police chief's claim. Since we're testing whether respo
 
 ```{r}
 # Set our significance level
-alpha <- baseline_mean
+alpha <- 0.05
 
 # Perform the t-test
 t_test_result <- t.test(
   response_data$response_time,
-  mu = baseline_mean,
+  mu = 8.2,
   alternative = "less"
 )
 
@@ -109,7 +109,7 @@ results
 
 **Answer this question:** Based on the p-value, can we reject the null hypothesis? What does this tell the police chief — and what does it NOT tell him?
 
-ANSWER HERE
+The p-value is  smaller than 0.05, so therefore we reject the null hypothesis. This tells the police chief that there is statistically significant data to show that the new numbers in the data set are lower. However, it doesn't prove that the new initiaves are connected to this improvement.
 
 ### Task 6: Visualize the results
 
@@ -142,7 +142,7 @@ The formula is: d = (baseline mean - sample mean) / baseline standard deviation
 Replace the REPLACE_ME values.
 
 ```{r}
-effect_size <- (REPLACE_ME - summary_stats$sample_mean) / REPLACE_ME
+effect_size <- (baseline_mean - summary_stats$sample_mean) / baseline_sd
 
 effect_size_interpretation <- case_when(
   abs(effect_size) < 0.2 ~ "Negligible",
@@ -161,7 +161,7 @@ tibble(
 
 **Answer this question:** The result is statistically significant, but the effect size is small. In practical terms, the improvement is about 25 seconds per call. The police chief is claiming success. Would you write a story saying the program works? How would you frame the findings honestly — acknowledging both that the improvement is real AND that it's small?
 
-ANSWER HERE
+I would write a story about the program improving response times, but I would mention the small sample size and the improvement of around only 25 seconds per call. I think in this case there needs to be a larger sample to prove that the initiative actually works. 20 calls seems small.
 
 ### Task 8: The journalist's framework (5 points)
 
@@ -174,15 +174,16 @@ Apply this framework to the community policing data:
 
 **Question 1:** Write 1-2 sentences answering whether the result is statistically significant and how you know.
 
-ANSWER HERE
+The result is statistically significant because the p-value is far lesser than 0.05. Therefore, we reject the null hypothesis.
 
 **Question 2:** Write 1-2 sentences answering whether the result is meaningfully significant. Consider: the program cost the city $2 million to implement. Is a 25-second improvement in response times worth that investment? What context would you need to answer that question?
 
-ANSWER HERE
+The result showed an improvement in the response time to calls, but to determine whether it's worth a $2 million investment we'd want to know if the data holds over a larger sample, and how many high-priority emergency calls the city receives,
 
 **Question 3:** Write a headline and a 2-3 sentence lede for a story about these findings. Your text should accurately reflect both the statistical significance and the effect size — don't let the police chief's framing drive the story if the data tells a more nuanced one.
 
-ANSWER HERE
+Westbrook Police Respone Times Drop 25 Seconds After New Policing Program
 
+Westbrook Police's average emergency response times dropped from 8.2 minutes to 7.775 minutes, a total of about 25 seconds, after a city implemented a new policing program costing $2 million. The cost raises questions as to if this decrease is enough to justify the investment. 
 
 When you are finished, save your work, switch to GitHub Desktop, then add, commit and push your changes to GitHub and submit the URL of the notebook in ELMS.
