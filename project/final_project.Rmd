@@ -11,7 +11,7 @@ library(tidyverse)
 
 ## R Markdown
 
-Data Installation
+Data
 
 ```{r}
 home_away_records <- read_csv("https://raw.githubusercontent.com/dwillis/dwillis.github.io/refs/heads/main/docs/sports-data-files/footballlogs1525.csv")
@@ -19,5 +19,17 @@ home_away_records <- read_csv("https://raw.githubusercontent.com/dwillis/dwillis
 big_ten_records <- home_away_records |> filter(Conference=="Big Ten Conference")
 
 ```
+
+https://raw.githubusercontent.com/dwillis/dwillis.github.io/refs/heads/main/docs/sports-data-files/footballlogs1525.csv
+
+The data was available online, but I wasn't sure on how to gather that into a CSV file for installation in R. Professor, thank you for the help in gathering the physical data in a readable file! 
+
+The data was available on CBS Sports, ESPN, the Big Ten website, and a handful of other sports sites. The main issue for me was figuring out where to find this data in a format that would work for the sake of this project.
+
+https://www.cbssports.com/college-football/standings/conference/FBS/BIG10/
+
+https://www.espn.com/college-football/standings
+
+
 
 
