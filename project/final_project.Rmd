@@ -14,6 +14,9 @@ library(tidyverse)
 Data Installation
 
 ```{r}
+home_away_records <- read_csv("https://raw.githubusercontent.com/dwillis/dwillis.github.io/refs/heads/main/docs/sports-data-files/footballlogs1525.csv")
+
+big_ten_records <- home_away_records |> filter(Conference=="Big Ten Conference")
 
 ```
 
