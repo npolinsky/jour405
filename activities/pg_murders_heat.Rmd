@@ -51,7 +51,7 @@ pg_murders_heat |>
 
 ### Task 6: Describe the results of both the correlation calculation and the scatterplot.
 
-The corrrelation coefficient and the scatterplot both show that there is an existing relationship between temperature and murders. This means that as temperatures go up, so do murders. May, June, and July, three of the warmer months of the year are the top three in homicides. May and June also fall exceptionally close to the line of best fit. We see cooler months, such as November, December, January, and February clustered in an area showing less murders than the warmer months. Overall, the coefficient and the scatterplot both express this correlation.
+The corrrelation coefficient and the scatterplot both show that there is an existing relationship between temperature and murders. Generally, as temperatures go up, so do murders. May, June, and July, three of the warmer months of the year are the top three in homicides. May and June also fall exceptionally close to the line of best fit. We see cooler months, such as November, January, and February clustered in an area showing less murders than the warmer months. There are some exceptions, such as December over August, and October, over September, which explains why the correlation coefficient isn't closer to 1.
 
 
 
