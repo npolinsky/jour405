@@ -30,6 +30,17 @@ https://www.cbssports.com/college-football/standings/conference/FBS/BIG10/
 
 https://www.espn.com/college-football/standings
 
+## The Tests You Could Run
+
+I will calculate the mean points scored and points against for each team, and/or the home/road win percentages for each team. I think a bar chart would be best to show this. However, I am concerned about the inclusion of non-conference games which could skew the data considering they're almost always played at home. 
+
+To this point, do you think it would make more sense to measure home field advantage by average point differential or win/loss results.
+
+More questions: Would it be best to omit non-conference games and if so how? Second, the home games are marked as "NA", how do I switch that?
+
+Either way, I could find a correlation coefficient and do a scatterplot with the home pt diff/win pct on one axis and the road pt diff/win pct on the other. 
+
+I could also use a t-test. My null hypothesis would be that there is no proven home field advantage in the Big Ten and my alternative hypothesis would be that there is a proven home field advantage in the Big Ten. I would conduct this t-test by comparing the home and away win percentages over the periods I have the data for. I would be able to figure out whether the differences are statistically significant using a significance level of 0.05.
 
 
 
