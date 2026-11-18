@@ -32,8 +32,7 @@ schools |> arrange(`FARMS Pct`) |> head(10)
 
 Look at the distribution of FARMS percentages. Do any values look unusual or suspicious? What might it mean if a school has a FARMS percentage of exactly 100? Write two or three sentences describing what you see and whether anything concerns you.
 
-ANSWER HERE
-
+The values of 100% are a little suspicious because there isn't anything between 54-100. That makes those eight schools outliers considering how far they are from the rest of the data. If a school has a FARMS % of 100 it means every kid in the school is on FARMS. 
 
 ### Task 2: Create a Scatterplot and Describe the Results
 
@@ -50,7 +49,7 @@ schools |>
 
 Describe what you see. Is there a clear trend? Does the regression line look like it represents the data well, or does it seem to be pulled in an odd direction? Connect what you observed in Task 1 to what you see here.
 
-ANSWER HERE
+There is no clear trend. The data is scattered all around. The regression line looks like it only faintly represents the data. If it weren't for the data points of 100, then the line of best fit would be much steeper rather than flat and extending all the way out on the x-axis.
 
 
 ### Task 3: Run the Regression Model
@@ -68,7 +67,9 @@ The **p-value** tells you whether the relationship is statistically significant.
 
 Report all three values and describe what they tell you. Does this model support the school board member's claim? Is this even a model worth using?
 
-ANSWER HERE
+The p-value is .1225. The adjusted R-squared is .0254. The coefficient for FARMS pct is .12349
+
+The p-value tells us this is not statistically significnt. The Adjusted R-squared tells us the FARMS pct explains about 2.54% of the variation in the math scores. The coefficient means that for every percentage-point increase in FARMS pct, there will be a .12349 increase in students meeting or exceeding the math score expectation.
 
 
 ### Task 4: What's Driving the Problem? Filter and Rerun.
@@ -98,7 +99,7 @@ cat("  Adjusted R-squared:", summary(model_filtered)$adj.r.squared, "\n")
 
 How did removing those schools change the model? Did the coefficient change direction? Did the p-value or R-squared improve meaningfully? What does this tell you about the influence of suspicious data values on a regression model?
 
-ANSWER HERE
+It made the p-value less than .05, showing statistical significance. The gain in adjusted R-squared is small, and shows no major change in the model although the FARMS pct explains a higher percentage of math scores than it did before. The coefficient increased, but also only slightly. Removing the values of 100 helped to sure up some of our numbers, but even then we can see that we still can't be sure that the FARMS pct predicts math scores.
 
 
 ### Task 5: Even the Better Model Has Problems
@@ -132,7 +133,7 @@ head(schools_filtered |> select(1, `FARMS Pct`, `% Met or Exceeded Math Expectat
 
 What are the largest residuals? Given the model's weak R-squared, how much confidence would you have in labeling these schools as over- or under-performers? Why?
 
-ANSWER HERE
+The largest residuals are Gulph Elementary School, Hereford Elementary School, and White Marsh Elementary School. Because of how low the adjusted r-squared is, it would be difficult to label these schools as under or over performers considering Farms pct explains very little of the variation in math scores in the county.
 
 
 ### Task 6: Write the Story Pitch
@@ -141,4 +142,4 @@ You've now run two models, examined the data quality and seen that even a cleane
 
 Write a short story pitch (3-5 sentences) that addresses the following: Does the data support or contradict the claim? What data quality issues did you find? What would you need - different data, a different model, additional reporting - before you could responsibly publish a story about this claim? Who would you call first?
 
-ANSWER HERE
+The data does not support the claim. FARMS pct explains very little in the variation of math scores, even after the values of 100 were filtered out. These eight schools reporting a FARMS percentage of 100 were data quality control issues considering how big of outliers they were to the rest of the data set. Before publishing any story I would want to figure out if those reported 100% values were actually valid, and look into other factors that may impact math scores. I would call the county superintendent as well as anyone else that works for the county more directly involved in data collection or analysis.
