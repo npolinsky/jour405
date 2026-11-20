@@ -1,6 +1,6 @@
 ---
 title: "Identifying Schools with Biggest Differences in Math Test Scores, Part 2"
-author: "YOUR NAME"
+author: "Nick Polinsky"
 ---
 
 ```{r}
@@ -30,7 +30,7 @@ schools |> arrange(desc(`FARMS Pct`)) |> head(10)
 
 Are there any data quality issues like the ones you found in the Pennsylvania data? How does the distribution of FARMS percentages compare between the two counties? Note anything that concerns you or gives you confidence in the data.
 
-ANSWER HERE
+There is a large cluster of data points around 4% FARMS, which could indicate a data quality issue or a reporting pattern worth looking at However, the cluster is less extreme than in the Pennsylvania data, which had a large gap between 54% and 99%. The Maryland data is more spread out, although the concentration of low FARMS percentages is still worth noting.
 
 
 ### Task 2: Create a Scatterplot and Compare (5 points)
@@ -39,7 +39,7 @@ Replace the REPLACE_ME value with the correct variable name to create a scatterp
 
 ```{r}
 schools |>
-  ggplot(aes(x = `REPLACE_ME`, y = `% Met or Exceeded Math Expectations`)) +
+  ggplot(aes(x = `FARMS Pct`, y = `% Met or Exceeded Math Expectations`)) +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE, color = "red") +
   labs(x = "FARMS Percentage", y = "% Met or Exceeded Math Expectations",
@@ -48,21 +48,20 @@ schools |>
 
 Describe what you see. Then compare this scatterplot specifically to the Pennsylvania one: what differences do you notice in the direction, strength, and spread of the relationship? The two counties share a name and are both suburban — what might explain why they look so different?
 
-ANSWER HERE
-
+The scatterplot shows a negative relationship between FARMS percentage and math scores, meaning that schools with higher FARMS percentages generally have lower math scores. The relationship looks moderately stronger than in the Pennsylvania data, with points more tightly clustered around the line of best fit. However, I would not classify the correlation as strong, and other factors likely influence math scores. Although both counties are suburban and share a name, differences in demographics, income levels, and the general school population could help explain why the relationships differ.
 
 ### Task 3: Linear Regression Model (5 points)
 
 Replace the REPLACE_ME value with the correct variable name to run a linear regression model predicting math scores from FARMS percentage.
 
 ```{r}
-model <- lm(`REPLACE_ME` ~ `FARMS Pct`, data = schools)
+model <- lm(`% Met or Exceeded Math Expectations` ~ `FARMS Pct`, data = schools)
 summary(model)
 ```
 
 Report the three key statistics: the p-value, the Adjusted R-squared, and the coefficient for FARMS Pct. Then interpret them together — not separately. What does the combination of these three numbers tell you about the relationship between poverty and math scores in Montgomery County, Md.? Is this model worth using? How does it compare to the Pennsylvania model?
 
-ANSWER HERE
+The p-value is very, very small, certainly less than .05, indicating the relationship is statistically significant. The coefficient is -.59511, meaning for every 1% increase in FARMS pct, the percentage of students exceeding math expectations decreases by about .6%. The adjusted r-squared of .6734 means that the model explains about 67.34% of the variation in math scores. These three values show us that FARMS pct is a statistically significant and perhaps useful predictor of math scores in this case, though it likely isn't the full picture. The Pennsylvania model showed a much weaker, much less supported relationship while the Maryland model is stronger.
 
 
 ### Task 4: Identifying Schools with the Biggest Residuals (6 points)
@@ -72,9 +71,9 @@ Replace the REPLACE_ME values with the correct variable names to calculate predi
 ```{r}
 schools <- schools |>
   mutate(
-    predicted = predict(REPLACE_ME),
+    predicted = predict(model),
     residual = `% Met or Exceeded Math Expectations` - predicted,
-    abs_residual = abs(REPLACE_ME)
+    abs_residual = abs(residual)
   ) |>
   arrange(desc(abs_residual))
 
@@ -88,7 +87,11 @@ For each of the two schools, answer:
 - Does anything in that profile help explain why the school is over- or under-performing the model?
 - What would your first reporting question be to the principal of that school?
 
-ANSWER HERE
+The school with the highest positive residual is Wayside Elementary. The school with the lowest negative residual is Stedwick Elementary.
+
+The zip code holding Wayside Elementary is 58% white and 22% Asian. Every other demographic, including Black, Hispanic, Mixed, and Other make up 20% combined. The median household income is $250,001 and 64% of households make over $200,000. These numbers show that the population Wayside Elementary serves may have greater accesability to outside educational resources, though the demographic of the zip code doesn't necessarily represent the demographic of the school. My first question would be what before/after school programs does Wayside Elementary have that allows students to outperform expectations?
+
+The zip code holding Stedwick Elementary is 44% black, a stark change from just the 4% mark in the other zip code. The median household income is $140,308 and the majority of households fall in the $100k-200k category (39%). The household income is significantly lower than that of the other county, which may mean the population of Stedwick Elementary has less access to outside resources to benefit education. Once again, the demographics and income of the county may not represent the school population. I would ask what resources he/she believes the students at Stedwick Elementary are missing.
 
 
 ### Task 5: Evaluate the Model and Write the Pitch (7 points)
@@ -97,4 +100,4 @@ You've now run this analysis on two counties. Return to the school board member'
 
 Write a short story pitch of 4-6 sentences that addresses all of the following: Does the Maryland data support or contradict the claim? How does it compare to what you found in Pennsylvania? What would you ask the school board member if you called them for comment? And what's the most interesting specific finding from your residuals analysis: which school would you want to visit first, and why?
 
-ANSWER HERE
+The Montgomery County, MD data supports this board member's claim. The p-value, coefficient, and adjusted r-squared all show more strength in this trend than we saw in Motgomery County, PA. I would ask the board member what other factors they've considered in the process if any. While this may be a indicator, it likely isn't the full story. I was shocked at how far above the model Wayside Elementary landed. They finished a whole 56.5% above expectations. This would be my first visit to see what they do so well and what they offer that helps their students to exceed expectations by that high of a figure.
