@@ -7,6 +7,7 @@ output: html_document
 
 ```{r setup, include=FALSE}
 library(tidyverse)
+options(scipen = 999)
 ```
 
 ## R Markdown
@@ -17,6 +18,18 @@ Data
 home_away_records <- read_csv("https://raw.githubusercontent.com/dwillis/dwillis.github.io/refs/heads/main/docs/sports-data-files/footballlogs1525.csv")
 
 big_ten_records <- home_away_records |> filter(Conference=="Big Ten Conference")
+
+home_games <- big_ten_records |>
+  filter(is.na(Location)) |>
+  transmute(
+    Date,
+    home_team = Team,
+    away_team = Opponent,
+    home_points = Points,
+    away_points = PointsOpp,
+    home_margin = Points - PointsOpp,
+    home_win = Points > PointsOpp
+  )
 
 ```
 
@@ -42,5 +55,64 @@ Either way, I could find a correlation coefficient and do a scatterplot with the
 
 I could also use a t-test. My null hypothesis would be that there is no proven home field advantage in the Big Ten and my alternative hypothesis would be that there is a proven home field advantage in the Big Ten. I would conduct this t-test by comparing the home and away win percentages over the periods I have the data for. I would be able to figure out whether the differences are statistically significant using a significance level of 0.05.
 
+```{r}
+home_averages <- home_games |>
+  group_by(home_team) |>
+  summarize(
+    home_avg = mean(home_points, na.rm = TRUE)
+  )
+
+away_averages <- home_games |>
+  group_by(away_team) |>
+  summarize(
+    away_avg = mean(away_points, na.rm = TRUE)
+  )
+
+team_averages <- full_join(
+  home_averages,
+  away_averages,
+  by = c("home_team" = "away_team")
+) |>
+  rename(team = home_team)
+
+big_ten_teams <- c(
+  "Illinois", "Indiana", "Iowa", "Maryland",
+  "Michigan", "Michigan State", "Minnesota",
+  "Nebraska", "Northwestern", "Ohio State",
+  "Oregon", "Penn State", "Purdue", "Rutgers",
+  "UCLA", "USC", "Washington", "Wisconsin"
+)
+
+big_ten_averages <- team_averages |>
+  filter(team %in% big_ten_teams)
+
+big_ten_averages <- big_ten_averages |> mutate(
+  home_away_diff = (home_avg - away_avg)
+)
+```
+
+https://chatgpt.com/share/6b05d076-0698-83ea-bc87-723015d2c828
+
+Here is the link I used to generate the above code. The main thing I was confused on was how to properly group them by team rather than just taking the values of all of the inputs. I also wasn't sure how to create a comparison chart where I could view the two values next to each other. The creation of the new dataframes was done in order to create a cleaner comparison of point differential totals rather than straight win loss results. I was also unsure as to how to filter to only Big Ten teams on my dataframe.  
+
+Null Hypothesis: The average home-minus-away point differential is zero.
+
+Alternative Hypothesis: The average home-minus-away point differential is greater than zero.
+
+I had trouble finding a way to do a two-sample t test through our previous notebooks. Both of the activities we did were one sample t tests. 
+
+I knew that I could pull certain categories from a dataframe with the $, and through google I found that I needed to add paired = true and alternative = greater to successfully do the paired t-test.
+
+```{r}
+t.test(
+ big_ten_averages$home_avg,
+ big_ten_averages$away_avg,
+ paired = TRUE,
+ alternative = "greater"
+)
+
+```
+
+Because the p-value is less than 0.05, we reject the null hypothesis. This tells us that the point differential between home and away games for Big Ten teams is statistically significant. The mean difference tells us that Big Ten teams scored 6.05 more points per average at home than away. This does not directly prove that home teams are more likely to win, but that they have a home scoring advantage.
 
 
